@@ -6,332 +6,583 @@
   <title>롯데 플랜카드 혜택</title>
   <style>
     :root {
-      --bg: #f5f7fa;
-      --card: #ffffff;
-      --text: #1f2937;
-      --sub: #6b7280;
-      --line: #e5e7eb;
-      --accent: #3b82f6;
-      --accent-soft: #e8f0fe;
-      --good: #059669;
-      --warn: #b45309;
-      --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
-      --radius: 20px;
+      --bg: #f7f8fb;
+      --surface: rgba(255,255,255,.86);
+      --surface-solid: #ffffff;
+      --text: #171719;
+      --muted: #74777f;
+      --soft: #eef3fb;
+      --line: rgba(17, 24, 39, .08);
+      --blue: #3182f6;
+      --blue-deep: #1b64da;
+      --green: #00a66c;
+      --yellow: #fff7db;
+      --shadow: 0 24px 70px rgba(31, 35, 45, .08);
+      --shadow-soft: 0 10px 30px rgba(31, 35, 45, .06);
+      --radius-xl: 32px;
+      --radius-lg: 24px;
+      --radius-md: 18px;
     }
 
     * { box-sizing: border-box; }
 
+    html { -webkit-text-size-adjust: 100%; }
+
     body {
       margin: 0;
-      font-family: "Apple SD Gothic Neo", "Malgun Gothic", "Segoe UI", sans-serif;
-      background: var(--bg);
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Segoe UI", sans-serif;
       color: var(--text);
-      line-height: 1.5;
+      background:
+        radial-gradient(circle at 18% 0%, rgba(49,130,246,.16), transparent 30%),
+        radial-gradient(circle at 92% 12%, rgba(0,166,108,.12), transparent 26%),
+        linear-gradient(180deg, #fbfcff 0%, var(--bg) 48%, #f2f4f8 100%);
+      letter-spacing: -0.035em;
     }
 
     .wrap {
-      max-width: 860px;
+      width: min(1040px, 100%);
       margin: 0 auto;
-      padding: 20px 16px 48px;
+      padding: 22px 16px 56px;
     }
 
     .hero {
-      background: linear-gradient(135deg, #ffffff 0%, #f8fbff 100%);
-      border: 1px solid #edf2f7;
-      border-radius: 28px;
-      padding: 24px 20px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 38px;
+      padding: 34px 22px 24px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.94), rgba(255,255,255,.72)),
+        linear-gradient(135deg, rgba(49,130,246,.12), rgba(255,255,255,0));
+      border: 1px solid rgba(255,255,255,.9);
       box-shadow: var(--shadow);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -90px;
+      top: -110px;
+      width: 260px;
+      height: 260px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(49,130,246,.22), rgba(0,166,108,.08));
+      filter: blur(4px);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(49,130,246,.09);
+      color: var(--blue-deep);
+      font-size: 13px;
+      font-weight: 800;
       margin-bottom: 16px;
     }
 
     .title {
+      position: relative;
+      z-index: 1;
       margin: 0;
-      font-size: 28px;
-      font-weight: 800;
-      letter-spacing: -0.04em;
+      font-size: clamp(36px, 7vw, 68px);
+      line-height: 1.03;
+      font-weight: 900;
+      letter-spacing: -0.065em;
     }
 
-    .subtitle {
-      margin: 8px 0 0;
-      color: var(--sub);
-      font-size: 14px;
+    .hero-copy {
+      position: relative;
+      z-index: 1;
+      margin: 14px 0 0;
+      max-width: 620px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.55;
+      font-weight: 650;
     }
 
-    .grid {
+    .quick-cards {
+      position: relative;
+      z-index: 1;
       display: grid;
-      gap: 16px;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 24px;
     }
 
-    @media (min-width: 860px) {
-      .grid.two {
-        grid-template-columns: 1.05fr 0.95fr;
+    @media (min-width: 720px) {
+      .quick-cards { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .quick {
+      background: rgba(255,255,255,.74);
+      border: 1px solid rgba(255,255,255,.82);
+      border-radius: 22px;
+      padding: 16px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .quick .label {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .quick .value {
+      font-size: 21px;
+      font-weight: 900;
+      letter-spacing: -0.05em;
+    }
+
+    .layout {
+      display: grid;
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    @media (min-width: 920px) {
+      .layout {
+        grid-template-columns: 380px 1fr;
+        align-items: start;
       }
     }
 
-    .card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 18px;
+    .panel {
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,.9);
+      border-radius: var(--radius-xl);
       box-shadow: var(--shadow);
+      padding: 22px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
     }
 
-    .section-title {
-      margin: 0 0 14px;
-      font-size: 18px;
-      font-weight: 800;
-      letter-spacing: -0.02em;
+    .panel-title {
+      margin: 0 0 18px;
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: -0.05em;
     }
 
-    .field {
-      margin-bottom: 14px;
-    }
-
+    .field { margin-bottom: 18px; }
     .field:last-child { margin-bottom: 0; }
 
     label {
-      display: block;
-      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 9px;
       font-size: 14px;
-      color: var(--text);
-      font-weight: 700;
+      color: var(--muted);
+      font-weight: 850;
     }
 
-    .help {
-      margin-top: 6px;
+    .label-note {
       font-size: 12px;
-      color: var(--sub);
+      color: #a0a3aa;
+      font-weight: 750;
     }
 
     input, select {
       width: 100%;
-      border: 1px solid #d1d5db;
-      border-radius: 14px;
-      padding: 14px 15px;
-      font-size: 16px;
-      background: #fff;
+      appearance: none;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 17px 16px;
+      font-size: 18px;
+      font-weight: 850;
       color: var(--text);
+      background: var(--surface-solid);
       outline: none;
-      transition: border-color 0.18s ease, box-shadow 0.18s ease;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.9);
+      transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+    }
+
+    select {
+      background-image:
+        linear-gradient(45deg, transparent 50%, #8a8d96 50%),
+        linear-gradient(135deg, #8a8d96 50%, transparent 50%);
+      background-position:
+        calc(100% - 21px) calc(50% - 3px),
+        calc(100% - 15px) calc(50% - 3px);
+      background-size: 6px 6px, 6px 6px;
+      background-repeat: no-repeat;
+      padding-right: 42px;
     }
 
     input:focus, select:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+      border-color: rgba(49,130,246,.75);
+      box-shadow: 0 0 0 5px rgba(49,130,246,.12);
     }
 
-    .kpi {
-      background: linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
-      border: 1px solid #dbeafe;
-      border-radius: 22px;
-      padding: 16px;
-      margin-bottom: 12px;
-    }
-
-    .kpi-label {
+    .hint {
+      margin-top: 8px;
+      color: var(--muted);
       font-size: 13px;
-      color: var(--sub);
-      margin-bottom: 6px;
-      font-weight: 700;
+      line-height: 1.45;
+      font-weight: 650;
     }
 
-    .kpi-value {
-      font-size: 28px;
-      line-height: 1.15;
-      font-weight: 900;
-      letter-spacing: -0.04em;
+    .plan-info {
+      margin-top: 18px;
+      border-radius: 26px;
+      padding: 18px;
+      background: linear-gradient(135deg, #eef6ff, #ffffff);
+      border: 1px solid rgba(49,130,246,.12);
     }
 
-    .kpi-value.good { color: var(--good); }
-    .kpi-value.accent { color: var(--accent); }
-
-    .rows {
-      display: grid;
-      gap: 10px;
-    }
-
-    .row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 12px 0;
-      border-bottom: 1px dashed var(--line);
-    }
-
-    .row:last-child { border-bottom: none; }
-
-    .row .name {
+    .plan-info-title {
+      margin-bottom: 8px;
+      color: var(--blue-deep);
       font-size: 14px;
-      color: var(--sub);
-      font-weight: 700;
+      font-weight: 900;
     }
 
-    .row .value {
-      font-size: 16px;
-      font-weight: 800;
-      text-align: right;
+    .plan-info-text {
+      color: #295177;
+      font-size: 14px;
+      line-height: 1.56;
+      font-weight: 720;
     }
 
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 10px;
-      font-size: 12px;
-      font-weight: 800;
-      border-radius: 999px;
-      background: var(--accent-soft);
-      color: var(--accent);
+    .result {
+      display: grid;
+      gap: 18px;
+    }
+
+    .top-result {
+      overflow: hidden;
+      position: relative;
+      border-radius: 36px;
+      padding: 24px;
+      background:
+        radial-gradient(circle at 88% 0%, rgba(255,255,255,.18), transparent 32%),
+        linear-gradient(135deg, #111827, #20242f 56%, #0c111b);
+      color: white;
+      box-shadow: 0 28px 80px rgba(17,24,39,.22);
+    }
+
+    .top-result::after {
+      content: "";
+      position: absolute;
+      width: 190px;
+      height: 190px;
+      right: -70px;
+      bottom: -95px;
+      border-radius: 50%;
+      background: rgba(49,130,246,.32);
+      filter: blur(8px);
+    }
+
+    .top-result .label {
+      color: rgba(255,255,255,.68);
+      font-size: 14px;
+      font-weight: 850;
       margin-bottom: 10px;
     }
 
-    .note {
-      margin-top: 16px;
-      background: #fffaf0;
-      border: 1px solid #fde68a;
-      border-radius: 18px;
-      padding: 14px;
+    .top-result .value {
+      position: relative;
+      z-index: 1;
+      font-size: clamp(36px, 8vw, 64px);
+      line-height: 1.03;
+      font-weight: 950;
+      letter-spacing: -0.07em;
     }
 
-    .note h3 {
-      margin: 0 0 8px;
-      font-size: 14px;
+    .top-result .caption {
+      position: relative;
+      z-index: 1;
+      margin-top: 12px;
+      color: rgba(255,255,255,.72);
+      font-size: 13px;
+      font-weight: 650;
+      line-height: 1.5;
     }
 
-    .note ul {
+    .metric-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    @media (min-width: 620px) {
+      .metric-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .metric {
+      min-height: 116px;
+      border-radius: 26px;
+      padding: 18px;
+      background: var(--surface-solid);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .metric .name {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 850;
+      line-height: 1.4;
+      margin-bottom: 10px;
+    }
+
+    .metric .num {
+      color: var(--text);
+      font-size: 25px;
+      font-weight: 950;
+      letter-spacing: -0.06em;
+    }
+
+    .metric.blue .num { color: var(--blue); }
+    .metric.green .num { color: var(--green); }
+
+    .details {
+      border-radius: var(--radius-xl);
+      background: var(--surface-solid);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
+      padding: 20px;
+    }
+
+    .detail-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .detail-head h2 {
       margin: 0;
-      padding-left: 18px;
-      color: #78350f;
-      font-size: 13px;
+      font-size: 21px;
+      font-weight: 950;
+      letter-spacing: -0.05em;
     }
 
-    .note li + li { margin-top: 6px; }
-
-    .foot {
-      margin-top: 18px;
-      color: var(--sub);
+    .pill {
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: #f2f4f8;
+      color: var(--muted);
       font-size: 12px;
-      text-align: center;
+      font-weight: 850;
+      white-space: nowrap;
     }
 
-    .summary-box {
-      margin-top: 14px;
-      border: 1px solid #d1fae5;
-      background: #f0fdf4;
-      border-radius: 18px;
-      padding: 14px;
+    .rows { display: grid; }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 15px 0;
+      border-bottom: 1px solid rgba(17,24,39,.07);
     }
 
-    .summary-box .headline {
+    .row:last-child { border-bottom: 0; }
+
+    .row .name {
+      color: var(--muted);
       font-size: 14px;
-      font-weight: 800;
-      color: #065f46;
-      margin-bottom: 6px;
+      font-weight: 760;
+      line-height: 1.35;
     }
 
-    .summary-box .copy {
+    .row .value {
+      color: var(--text);
+      font-size: 16px;
+      font-weight: 950;
+      white-space: nowrap;
+      text-align: right;
+    }
+
+    .summary {
+      border-radius: 26px;
+      padding: 18px;
+      background: linear-gradient(135deg, #f0fbf7, #ffffff);
+      border: 1px solid rgba(0,166,108,.13);
+      color: #066845;
+      font-size: 14px;
+      font-weight: 820;
+      line-height: 1.58;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .notice {
+      margin-top: 18px;
+      padding: 16px 18px;
+      border-radius: 24px;
+      background: rgba(255,255,255,.6);
+      border: 1px solid var(--line);
+      color: var(--muted);
       font-size: 13px;
-      color: #065f46;
+      line-height: 1.62;
+      font-weight: 650;
+    }
+
+    .notice strong { color: var(--text); }
+
+    .footer {
+      margin-top: 24px;
+      text-align: center;
+      color: #8b8e96;
+      font-size: 12px;
+      line-height: 1.55;
+      font-weight: 600;
+    }
+
+    @media (max-width: 420px) {
+      .wrap { padding: 14px 12px 44px; }
+      .hero { border-radius: 30px; padding: 28px 18px 22px; }
+      .panel, .details { padding: 18px; }
+      .top-result { padding: 22px 20px; }
+      .row { align-items: flex-start; }
+      .row .value { font-size: 15px; }
     }
   </style>
 </head>
+
 <body>
   <div class="wrap">
-    <section class="hero">
+    <header class="hero">
+      <div class="eyebrow">롯데카드 상담용 계산기</div>
       <h1 class="title">롯데 플랜카드 혜택</h1>
-      <p class="subtitle">토스 스타일 카드 혜택 계산기 · 청구할인, 캐시백, 롤라머니, 플랜약정 혜택을 한 번에 정리해요.</p>
-    </section>
+      <p class="hero-copy">결제금액만 입력하면 청구할인, 캐시백, 롤라머니, 플랜약정 혜택을 한눈에 계산합니다.</p>
 
-    <section class="grid two">
-      <div class="card">
-        <h2 class="section-title">결제 정보 입력</h2>
+      <div class="quick-cards">
+        <div class="quick">
+          <div class="label">청구할인</div>
+          <div class="value">5% · 최대 5만원</div>
+        </div>
+        <div class="quick">
+          <div class="label">기본 캐시백</div>
+          <div class="value">20만원↑ 4만원</div>
+        </div>
+        <div class="quick">
+          <div class="label">플랜약정</div>
+          <div class="value">월 70만원 사용 시 2만원</div>
+        </div>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="panel">
+        <h2 class="panel-title">결제 정보 입력</h2>
 
         <div class="field">
-          <label for="purchaseAmount">결제금액</label>
+          <label for="purchaseAmount">
+            결제금액
+            <span class="label-note">자동 콤마</span>
+          </label>
           <input id="purchaseAmount" type="text" inputmode="numeric" placeholder="예: 1,000,000" value="1000000" />
-          <div class="help">숫자만 입력해도 자동으로 콤마가 적용돼요.</div>
+          <div class="hint">실제 결제 예정 금액을 입력해 주세요.</div>
         </div>
 
         <div class="field">
-          <label for="planTerm">플랜약정 선택</label>
+          <label for="planTerm">
+            플랜약정
+            <span class="label-note">70만원 기준</span>
+          </label>
           <select id="planTerm">
             <option value="0">선택 안함</option>
-            <option value="12">12개월 (총 240,000원)</option>
-            <option value="24">24개월 (총 480,000원)</option>
-            <option value="36" selected>36개월 (총 720,000원)</option>
+            <option value="12">12개월 · 총 240,000원</option>
+            <option value="24">24개월 · 총 480,000원</option>
+            <option value="36" selected>36개월 · 총 720,000원</option>
           </select>
-          <div class="help">월 70만원 사용 시 매월 20,000원 할인 적용 (12/24/36개월 선택 가능)</div>
+          <div class="hint">월 70만원 사용 시 매월 20,000원 할인을 기준으로 계산합니다.</div>
         </div>
 
         <div class="field">
-          <label for="rollaEnabled">롤라머니 반영</label>
+          <label for="rollaEnabled">
+            롤라머니
+            <span class="label-note">7% 최대 3만원</span>
+          </label>
           <select id="rollaEnabled">
-            <option value="yes" selected>반영</option>
-            <option value="no">미반영</option>
+            <option value="yes" selected>혜택에 반영</option>
+            <option value="no">반영하지 않음</option>
           </select>
-          <div class="help">혜택 계산에는 포함하되, 고객센터 통해 캐시백/청구할인 전환 가능 안내용이에요.</div>
+          <div class="hint">고객센터를 통해 캐시백 또는 청구할인 형태로 지정 가능하다는 점을 안내해 주세요.</div>
         </div>
 
-        <div class="note">
-          <h3>꼭 알아둘 점</h3>
-          <ul>
-            <li>청구할인, 캐시백, 플랜약정 추가 캐시백, 롤라머니는 중복 가능 기준으로 계산돼요.</li>
-            <li>기본 캐시백은 20만원 이상 결제 시 40,000원 적용돼요.</li>
-            <li>플랜약정 추가 캐시백 20,000원은 플랜약정 선택 시에만 적용돼요.</li>
-            <li>롤라머니는 롯데카드 고객센터 1588-8100을 통해 캐시백 또는 청구할인 형태의 현금성 혜택으로 지정 가능하다는 점을 안내해 주세요.</li>
-            <li>플랜약정은 월 70만원 사용 시 매월 20,000원 할인을 받을 수 있는 구조이며, 조건 미충족 시에는 할인액이 청구되어 무이자성 분납 개념으로 이해할 수 있어요.</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="grid">
-        <div class="card">
-          <div class="badge">즉시 혜택 요약</div>
-          <div class="kpi">
-            <div class="kpi-label">즉시 혜택 합계</div>
-            <div class="kpi-value accent" id="instantTotal">0원</div>
+        <div class="plan-info">
+          <div class="plan-info-title">플랜약정 핵심 안내</div>
+          <div class="plan-info-text">
+            월 70만원 사용 시 매월 20,000원을 할인받습니다.
+            12개월은 24만원, 24개월은 48만원, 36개월은 72만원 혜택으로 계산됩니다.
           </div>
+        </div>
+
+        <div class="notice">
+          <strong>유의사항</strong><br>
+          청구할인, 캐시백, 플랜약정 추가 캐시백, 롤라머니는 중복 가능 기준입니다.
+          롤라머니는 롯데카드 고객센터 1588-8100을 통해 현금성 혜택으로 지정 가능할 수 있습니다.
+          최종 적용 조건은 카드사 정책 및 행사 조건 확인이 필요합니다.
+        </div>
+      </section>
+
+      <section class="result">
+        <div class="top-result">
+          <div class="label">플랜약정 포함 최대 체감가</div>
+          <div class="value" id="afterPlan">0원</div>
+          <div class="caption">즉시 혜택과 선택한 플랜약정 총 혜택을 모두 반영한 금액입니다.</div>
+        </div>
+
+        <div class="metric-grid">
+          <div class="metric blue">
+            <div class="name">즉시 혜택 합계</div>
+            <div class="num" id="instantTotal">0원</div>
+          </div>
+          <div class="metric green">
+            <div class="name">플랜약정 총 혜택</div>
+            <div class="num" id="planBenefit">0원</div>
+          </div>
+          <div class="metric">
+            <div class="name">즉시 혜택 반영 체감가</div>
+            <div class="num" id="afterInstant">0원</div>
+          </div>
+        </div>
+
+        <div class="details">
+          <div class="detail-head">
+            <h2>혜택 상세</h2>
+            <div class="pill" id="termText">36개월</div>
+          </div>
+
           <div class="rows">
-            <div class="row"><div class="name">청구할인 5% (최대 5만원)</div><div class="value" id="discount5">0원</div></div>
-            <div class="row"><div class="name">20만원 이상 기본 캐시백</div><div class="value" id="cashback40">0원</div></div>
-            <div class="row"><div class="name">플랜약정 추가 캐시백</div><div class="value" id="planCashback">0원</div></div>
-            <div class="row"><div class="name">롤라머니 7% (최대 3만원)</div><div class="value" id="rollaMoney">0원</div></div>
+            <div class="row">
+              <div class="name">청구할인 5% · 최대 5만원</div>
+              <div class="value" id="discount5">0원</div>
+            </div>
+            <div class="row">
+              <div class="name">20만원 이상 기본 캐시백</div>
+              <div class="value" id="cashback40">0원</div>
+            </div>
+            <div class="row">
+              <div class="name">플랜약정 추가 캐시백</div>
+              <div class="value" id="planCashback">0원</div>
+            </div>
+            <div class="row">
+              <div class="name">롤라머니 7% · 최대 3만원</div>
+              <div class="value" id="rollaMoney">0원</div>
+            </div>
           </div>
         </div>
 
-        <div class="card">
-          <div class="badge">플랜약정 혜택 (월 70만원 사용 기준)</div>
-          <div class="kpi">
-            <div class="kpi-label">플랜약정 총 혜택</div>
-            <div class="kpi-value good" id="planBenefit">0원</div>
-          </div>
-          <div class="rows">
-            <div class="row"><div class="name">선택한 약정기간</div><div class="value" id="termText">선택 안함</div></div>
-            <div class="row"><div class="name">월 할인금액</div><div class="value">20,000원</div></div>
-            <div class="row"><div class="name">기간별 총 혜택</div><div class="value" id="termBenefitText">0원</div></div>
-          </div>
+        <div class="summary" id="summaryCopy">
+          결제금액을 입력하면 상담용 요약이 자동으로 표시됩니다.
         </div>
+      </section>
+    </main>
 
-        <div class="card">
-          <div class="badge">최종 체감가 비교</div>
-          <div class="kpi">
-            <div class="kpi-label">즉시 혜택 반영 체감가</div>
-            <div class="kpi-value" id="afterInstant">0원</div>
-          </div>
-          <div class="kpi" style="margin-bottom:0;">
-            <div class="kpi-label">플랜약정 포함 최대 체감가</div>
-            <div class="kpi-value good" id="afterPlan">0원</div>
-          </div>
-          <div class="summary-box">
-            <div class="headline">상담용 한 줄 요약</div>
-            <div class="copy" id="summaryCopy">결제금액을 입력하면 바로 계산돼요.</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <p class="foot">실제 카드사 정책과 적용 조건은 시점에 따라 달라질 수 있으니, 최종 안내 전 한 번 더 확인해 주세요.</p>
+    <p class="footer">상담 보조용 계산기입니다. 실제 혜택 적용 여부는 카드사 및 행사 조건을 기준으로 확인해 주세요.</p>
   </div>
 
   <script>
@@ -346,10 +597,9 @@
       rollaMoney: document.getElementById('rollaMoney'),
       instantTotal: document.getElementById('instantTotal'),
       planBenefit: document.getElementById('planBenefit'),
-      termText: document.getElementById('termText'),
-      termBenefitText: document.getElementById('termBenefitText'),
       afterInstant: document.getElementById('afterInstant'),
       afterPlan: document.getElementById('afterPlan'),
+      termText: document.getElementById('termText'),
       summaryCopy: document.getElementById('summaryCopy')
     };
 
@@ -363,19 +613,6 @@
 
     function formatWon(num) {
       return `${formatNumber(num)}원`;
-    }
-
-    function bindCurrencyInput(input) {
-      input.addEventListener('input', () => {
-        const num = toNumber(input.value);
-        input.value = num ? formatNumber(num) : '';
-        calculate();
-      });
-
-      input.addEventListener('blur', () => {
-        const num = toNumber(input.value);
-        input.value = num ? formatNumber(num) : '';
-      });
     }
 
     function calculate() {
@@ -400,18 +637,19 @@
       el.planBenefit.textContent = formatWon(planBenefit);
       el.afterInstant.textContent = formatWon(afterInstant);
       el.afterPlan.textContent = formatWon(afterPlan);
+      el.termText.textContent = term === 0 ? '플랜약정 미선택' : `${term}개월 플랜약정`;
 
-      el.termText.textContent = term === 0 ? '선택 안함' : `${term}개월`;
-      el.termBenefitText.textContent = formatWon(planBenefit);
-
-      const summary = amount === 0
-        ? '결제금액을 입력하면 바로 계산돼요.'
-        : `결제금액 ${formatWon(amount)} 기준, 즉시 혜택은 ${formatWon(instantTotal)}이고 ${term > 0 ? `${term}개월 플랜약정까지 포함하면 최대 체감가는 ${formatWon(afterPlan)}이에요.` : `즉시 혜택 반영 체감가는 ${formatWon(afterInstant)}이에요.`}`;
-
-      el.summaryCopy.textContent = summary;
+      el.summaryCopy.textContent = amount === 0
+        ? '결제금액을 입력하면 상담용 요약이 자동으로 표시됩니다.'
+        : `결제금액 ${formatWon(amount)} 기준 즉시 혜택은 ${formatWon(instantTotal)}입니다. ${term > 0 ? `월 70만원 사용 플랜약정 ${term}개월을 포함하면 최대 체감가는 ${formatWon(afterPlan)}입니다.` : `플랜약정 미선택 기준 체감가는 ${formatWon(afterInstant)}입니다.`}`;
     }
 
-    bindCurrencyInput(purchaseAmount);
+    purchaseAmount.addEventListener('input', () => {
+      const num = toNumber(purchaseAmount.value);
+      purchaseAmount.value = num ? formatNumber(num) : '';
+      calculate();
+    });
+
     planTerm.addEventListener('change', calculate);
     rollaEnabled.addEventListener('change', calculate);
 
